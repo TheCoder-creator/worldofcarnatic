@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>World of Carnatic</title>
+    <style>
+        :root{
+            --cream:#F4EFDD;
+            --maroon:#6E1F1A;
+            --maroon-deep:#4A1512;
+            --tan:#B08D63;
+            --tan-dark:#8C6C48;
+            --ink:#2B2018;
+            --green:#2F4A38;
+            --gold:#C77F2E;
+            --border-purple:#3B2350;
+        }
+        *{
+            box-sizing:border-box;
+            margin:0;
+        }
+        body{
+            background:var(--cream);
+            font-family:'Georgia','Times New Roman',serif;
+            color:var(--ink);
+            display:flex;
+            flex-direction:column;
+            min-height:100vh;
+        }
+        .topnav{
+            display:flex;
+            flex-wrap:wrap;
+            justify-content:center;
+            gap:8px;
+            background:var(--border-purple);
+            padding:12px 16px;
+            border-bottom:6px solid var(--gold);
+        }
+        .nav-btn{
+            text-decoration:none;
+            padding:10px 16px;
+            border-radius:6px;
+            font-size:14px;
+            font-weight:700;
+            letter-spacing:0.02em;
+            color:var(--cream);
+            background:rgba(255,255,255,0.06);
+            border:1px solid rgba(255,255,255,0.15);
+            transition:transform 0.15s ease,background 0.15s ease;
+            white-space:nowrap;
+        }
+        .nav-btn:hover{
+            background:var(--gold);
+            color:var(--maroon-deep);
+            transform:translateY(-2px);
+        }
+        .nav-btn:focus-visible{
+            outline:2px solid var(--gold);
+            outline-offset:2px;
+        }
+        .nav-btn.home{
+            background:var(--maroon);
+            border-color:var(--gold);
+        }
+        .nav-btn.home:hover{
+            background:var(--gold);
+            color:var(--maroon-deep);
+        }
+        .home-image{
+            flex:1;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            padding:0;
+            line-height:0;
+            position:relative; /* Added to anchor the fullscreen button */
+            background:#000; /* Dark background during transitions */
+        }
+        .home-image img{
+            width:100%;
+            height:100%;
+            object-fit:cover;
+            display:block;
+        }
+        /* New Fullscreen Toggle Button Styles */
+        .fullscreen-btn {
+            position:absolute;
+            bottom:20px;
+            right:20px;
+            padding:12px 20px;
+            background:var(--maroon);
+            color:var(--cream);
+            border:2px solid var(--gold);
+            border-radius:6px;
+            font-family:'Georgia',serif;
+            font-size:14px;
+            font-weight:700;
+            cursor:pointer;
+            box-shadow:0 4px 12px rgba(0,0,0,0.3);
+            transition:transform 0.15s ease, background 0.15s ease;
+            z-index:10;
+        }
+        .fullscreen-btn:hover {
+            background:var(--gold);
+            color:var(--maroon-deep);
+            transform:scale(1.05);
+        }
+        .fullscreen-btn:focus-visible {
+            outline:2px solid var(--cream);
+            outline-offset:2px;
+        }
+    </style>
+</head>
+<body>
+    <nav class="topnav" aria-label="Site sections">
+        <a class="nav-btn home" href="#" data-page="home">Home</a>
+        <a class="nav-btn" href="#" data-page="carnatic-dictionary">Carnatic Dictionary</a>
+        <a class="nav-btn" href="#" data-page="pitch-identifier">Pitch Identifier</a>
+        <a class="nav-btn" href="#" data-page="manodharmam">Manodharmam</a>
+        <a class="nav-btn" href="#" data-page="ragas">Ragas</a>
+        <a class="nav-btn" href="#" data-page="composers">Composers</a>
+        <a class="nav-btn" href="#" data-page="compositions-archive">Compositions Archive</a>
+        <a class="nav-btn" href="#" data-page="talam">Talam</a>
+        <a class="nav-btn" href="#" data-page="metronome">Metronome</a>
+        <a class="nav-btn" href="#" data-page="shruthi">Shruthi</a>
+    </nav>
+
+    <div class="home-image" id="imageContainer">
+        <img src="https://raw.githubusercontent.com/TheCoder-creator/worldofcarnatic/main/Home.png" alt="World of Carnatic">
+        <!-- New Fullscreen Button -->
+        <button class="fullscreen-btn" id="fsBtn" aria-label="Toggle Fullscreen">Fullscreen</button>
+    </div>
+
+    <script>
+        const container = document.getElementById('imageContainer');
+        const btn = document.getElementById('fsBtn');
+
+        btn.addEventListener('click', () => {
+            // Check if the element is already in fullscreen mode
+            if (!document.fullscreenElement && !document.webkitFullscreenElement) {
+                // Trigger fullscreen across different browser engines
+                if (container.requestFullscreen) {
+                    container.requestFullscreen();
+                } else if (container.webkitRequestFullscreen) { /* Safari */
+                    container.webkitRequestFullscreen();
+                }
+            } else {
+                // Exit fullscreen mode
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                } else if (document.webkitExitFullscreen) { /* Safari */
+                    document.webkitExitFullscreen();
+                }
+            }
+        });
+
+        // Listen for fullscreen changes to dynamically update button text
+        function updateButtonText() {
+            if (document.fullscreenElement || document.webkitFullscreenElement) {
+                btn.textContent = "Exit Fullscreen";
+            } else {
+                btn.textContent = "Fullscreen";
+            }
+        }
+
+        document.addEventListener('fullscreenchange', updateButtonText);
+        document.addEventListener('webkitfullscreenchange', updateButtonText);
+    </script>
+</body>
+</html>
