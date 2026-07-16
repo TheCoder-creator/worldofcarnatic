@@ -74,8 +74,8 @@
             justify-content:center;
             padding:0;
             line-height:0;
-            position:relative; /* Added to anchor the fullscreen button */
-            background:#000; /* Dark background during transitions */
+            position:relative;
+            background:#000;
         }
         .home-image img{
             width:100%;
@@ -83,7 +83,6 @@
             object-fit:cover;
             display:block;
         }
-        /* New Fullscreen Toggle Button Styles */
         .fullscreen-btn {
             position:absolute;
             bottom:20px;
@@ -106,29 +105,24 @@
             color:var(--maroon-deep);
             transform:scale(1.05);
         }
-        .fullscreen-btn:focus-visible {
-            outline:2px solid var(--cream);
-            outline-offset:2px;
-        }
     </style>
 </head>
 <body>
     <nav class="topnav" aria-label="Site sections">
-        <a class="nav-btn home" href="#" data-page="home">Home</a>
-        <a class="nav-btn" href="#" data-page="carnatic-dictionary">Carnatic Dictionary</a>
-        <a class="nav-btn" href="#" data-page="pitch-identifier">Pitch Identifier</a>
-        <a class="nav-btn" href="#" data-page="manodharmam">Manodharmam</a>
-        <a class="nav-btn" href="#" data-page="ragas">Ragas</a>
-        <a class="nav-btn" href="#" data-page="composers">Composers</a>
-        <a class="nav-btn" href="#" data-page="compositions-archive">Compositions Archive</a>
-        <a class="nav-btn" href="#" data-page="talam">Talam</a>
-        <a class="nav-btn" href="#" data-page="metronome">Metronome</a>
-        <a class="nav-btn" href="#" data-page="shruthi">Shruthi</a>
+        <a class="nav-btn home" href="https://horizensearch.com">Home</a>
+        <a class="nav-btn" href="https://horizensearch.com/carnatic-dictionary">Carnatic Dictionary</a>
+        <a class="nav-btn" href="https://horizensearch.com/pitch-identifier">Pitch Identifier</a>
+        <a class="nav-btn" href="https://horizensearch.com/manodharmam">Manodharmam</a>
+        <a class="nav-btn" href="https://horizensearch.com/ragas">Ragas</a>
+        <a class="nav-btn" href="https://horizensearch.com/composers">Composers</a>
+        <a class="nav-btn" href="https://horizensearch.com/compositions-archive">Compositions Archive</a>
+        <a class="nav-btn" href="https://horizensearch.com/talam">Talam</a>
+        <a class="nav-btn" href="https://horizensearch.com/metronome">Metronome</a>
+        <a class="nav-btn" href="https://horizensearch.com/shruti">Shruthi</a>
     </nav>
 
     <div class="home-image" id="imageContainer">
-        <img src="https://raw.githubusercontent.com/TheCoder-creator/worldofcarnatic/main/Home.png" alt="World of Carnatic">
-        <!-- New Fullscreen Button -->
+        <img src="https://githubusercontent.com" alt="World of Carnatic">
         <button class="fullscreen-btn" id="fsBtn" aria-label="Toggle Fullscreen">Fullscreen</button>
     </div>
 
@@ -137,25 +131,21 @@
         const btn = document.getElementById('fsBtn');
 
         btn.addEventListener('click', () => {
-            // Check if the element is already in fullscreen mode
             if (!document.fullscreenElement && !document.webkitFullscreenElement) {
-                // Trigger fullscreen across different browser engines
                 if (container.requestFullscreen) {
                     container.requestFullscreen();
-                } else if (container.webkitRequestFullscreen) { /* Safari */
+                } else if (container.webkitRequestFullscreen) {
                     container.webkitRequestFullscreen();
                 }
             } else {
-                // Exit fullscreen mode
                 if (document.exitFullscreen) {
                     document.exitFullscreen();
-                } else if (document.webkitExitFullscreen) { /* Safari */
+                } else if (document.webkitExitFullscreen) {
                     document.webkitExitFullscreen();
                 }
             }
         });
 
-        // Listen for fullscreen changes to dynamically update button text
         function updateButtonText() {
             if (document.fullscreenElement || document.webkitFullscreenElement) {
                 btn.textContent = "Exit Fullscreen";
