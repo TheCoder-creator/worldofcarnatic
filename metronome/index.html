@@ -7,7 +7,49 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css"/>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Fraunces:wght@400;500;600&family=Poppins:wght@400;500&display=swap');
-body{margin:0;background:#f3ead9;padding:32px 16px;}
+body{margin:0;background:#f3ead9;}
+.topnav{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:8px;
+    background:#4a3a26;
+    padding:12px 16px;
+    border-bottom:6px solid #a9673a;
+    font-family:'Poppins',sans-serif;
+}
+.nav-btn{
+    text-decoration:none;
+    padding:10px 16px;
+    border-radius:6px;
+    font-size:14px;
+    font-weight:600;
+    letter-spacing:0.02em;
+    color:#faf4e8;
+    background:rgba(255,255,255,0.06);
+    border:1px solid rgba(255,255,255,0.15);
+    transition:transform 0.15s ease,background 0.15s ease,color 0.15s ease;
+    white-space:nowrap;
+}
+.nav-btn:hover{
+    background:#c98a4f;
+    color:#4a3a26;
+    transform:translateY(-2px);
+}
+.nav-btn:focus-visible{
+    outline:2px solid #c98a4f;
+    outline-offset:2px;
+}
+.nav-btn.active{
+    background:#a9673a;
+    border-color:#c98a4f;
+    color:#fff9ef;
+}
+.nav-btn.active:hover{
+    background:#c98a4f;
+    color:#4a3a26;
+}
+.page-wrap{padding:32px 16px;}
 .ctm{--bg:#f3ead9;--card:#faf4e8;--line:#d9c6a5;--line2:#c9ad81;--ink:#4a3a26;--ink2:#8a6f4e;--accent:#a9673a;--accent2:#c98a4f;--accentDark:#7a4a26;--sam:#8c3f2a;font-family:'Poppins',sans-serif;color:var(--ink);}
 .ctm h1,.ctm h2{font-family:'Fraunces',serif;}
 .ctm input,.ctm button{font-family:'Poppins',sans-serif;}
@@ -25,6 +67,21 @@ body{margin:0;background:#f3ead9;padding:32px 16px;}
 </style>
 </head>
 <body>
+
+<nav class="topnav" aria-label="Site sections">
+    <a class="nav-btn" href="https://harmony.horizensearch.com">Home</a>
+    <a class="nav-btn" href="https://harmony.horizensearch.com/carnatic-dictionary">Carnatic Dictionary</a>
+    <a class="nav-btn" href="https://harmony.horizensearch.com/pitch-identifier">Pitch Identifier</a>
+    <a class="nav-btn" href="https://harmony.horizensearch.com/manodharmam">Manodharmam</a>
+    <a class="nav-btn" href="https://harmony.horizensearch.com/ragas">Ragas</a>
+    <a class="nav-btn" href="https://harmony.horizensearch.com/composers">Composers</a>
+    <a class="nav-btn" href="https://harmony.horizensearch.com/compositions-archive">Compositions Archive</a>
+    <a class="nav-btn" href="https://harmony.horizensearch.com/talam">Talam</a>
+    <a class="nav-btn active" href="https://harmony.horizensearch.com/metronome">Metronome</a>
+    <a class="nav-btn" href="https://harmony.horizensearch.com/shruti">Shruthi</a>
+</nav>
+
+<div class="page-wrap">
 <div class="ctm" id="ctmRoot" style="max-width:520px;margin:0 auto;">
 <h2 class="sr-only" style="position:absolute;width:1px;height:1px;overflow:hidden;">Interactive Carnatic tala metronome with searchable tala selector, adjustable tempo, tap tempo, and a tap-to-record custom tala builder.</h2>
 
@@ -85,6 +142,7 @@ body{margin:0;background:#f3ead9;padding:32px 16px;}
   <input id="customGroups" type="text" placeholder="Anga pattern, e.g. 4,2,2"
     style="width:100%;box-sizing:border-box;padding:9px 12px;border:1px solid var(--line2);border-radius:9px;background:#fffdf8;color:var(--ink);font-size:14px;outline:none;"/>
   <p style="font-size:12px;color:var(--ink2);margin:8px 0 0;">If you've tapped anything above, "Save tala" uses that instead of this field.</p>
+</div>
 </div>
 </div>
 
