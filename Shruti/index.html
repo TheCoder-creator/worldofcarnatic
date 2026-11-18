@@ -1,0 +1,1065 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta name="theme-color" content="#3b244d">
+
+  <title>Shruthi | World of Carnatic</title>
+
+  <style>
+    :root {
+      color-scheme: light;
+      --cream: #f7f5df;
+      --paper: #fffdf3;
+      --ink: #402d23;
+      --muted: #786959;
+      --wine: #7b2516;
+      --purple: #3b244d;
+      --gold: #b68b50;
+      --line: #dfd3b9;
+      --green: #45543b;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: var(--cream);
+      color: var(--ink);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont,
+        "Segoe UI", sans-serif;
+    }
+
+    button {
+      font: inherit;
+      cursor: pointer;
+    }
+
+    button,
+    a {
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    :focus-visible {
+      outline: 3px solid var(--gold);
+      outline-offset: 4px;
+    }
+
+    [hidden] {
+      display: none !important;
+    }
+
+    /* Navigation */
+
+    .main-nav {
+      width: 100%;
+      padding: 13px 20px;
+      background: var(--purple);
+      border-bottom: 4px solid var(--gold);
+    }
+
+    .nav-inner {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      max-width: 1500px;
+      margin: auto;
+    }
+
+    .main-nav a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 42px;
+      padding: 10px 17px;
+      border: 1px solid rgb(247 240 219 / 16%);
+      border-radius: 7px;
+      background: rgb(255 255 255 / 5%);
+      color: #f5ecd8;
+      font: 700 16px Georgia, "Times New Roman", serif;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    .main-nav a:hover {
+      background: rgb(255 255 255 / 12%);
+      border-color: var(--gold);
+    }
+
+    .main-nav a[aria-current="page"] {
+      background: var(--wine);
+      border-color: #c28a42;
+    }
+
+    /* Layout */
+
+    main {
+      max-width: 1080px;
+      padding: 42px 24px;
+      margin: auto;
+    }
+
+    .intro {
+      margin-bottom: 32px;
+      text-align: center;
+    }
+
+    .eyebrow {
+      color: var(--green);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 10px 0 14px;
+      color: var(--wine);
+      font: 400 clamp(52px, 9vw, 78px) Georgia, serif;
+    }
+
+    .intro > p:last-child {
+      max-width: 540px;
+      margin: auto;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      align-items: start;
+    }
+
+    .card {
+      min-width: 0;
+      padding: 26px;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: var(--paper);
+      box-shadow: 0 8px 26px rgb(64 45 35 / 4%);
+    }
+
+    h2 {
+      margin: 0 0 10px;
+      font: 400 27px Georgia, serif;
+    }
+
+    .hint {
+      margin: 0 0 22px;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    /* Pitch controls */
+
+    .pitch-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 11px;
+    }
+
+    .pitch {
+      min-height: 82px;
+      border: 1px solid var(--line);
+      border-radius: 11px;
+      background: var(--cream);
+      color: var(--ink);
+    }
+
+    .pitch:hover {
+      border-color: var(--gold);
+    }
+
+    .pitch[aria-pressed="true"] {
+      background: var(--wine);
+      border-color: var(--wine);
+      color: #fff7e4;
+    }
+
+    .pitch-note {
+      display: block;
+      font: 400 29px Georgia, serif;
+    }
+
+    .pitch-name {
+      display: block;
+      margin-top: 5px;
+      font-size: 10px;
+      opacity: 0.8;
+    }
+
+    .field {
+      margin-top: 24px;
+    }
+
+    .field-label {
+      display: block;
+      margin-bottom: 10px;
+      font-size: 13px;
+      font-weight: 650;
+    }
+
+    .modes {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 9px;
+    }
+
+    .mode {
+      min-height: 68px;
+      padding: 10px 4px;
+      border: 1px solid var(--line);
+      border-radius: 9px;
+      background: var(--cream);
+      color: var(--ink);
+    }
+
+    .mode span {
+      display: block;
+      font: 400 24px Georgia, serif;
+    }
+
+    .mode small {
+      display: block;
+      margin-top: 5px;
+      font-size: 10px;
+    }
+
+    .mode[aria-pressed="true"] {
+      background: var(--purple);
+      border-color: var(--purple);
+      color: #fff7e4;
+    }
+
+    .search-preview {
+      margin-top: 22px;
+      padding: 14px;
+      border: 1px dashed var(--line);
+      border-radius: 9px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.7;
+      overflow-wrap: anywhere;
+    }
+
+    .search-preview span {
+      display: block;
+      color: var(--wine);
+      font-weight: 600;
+    }
+
+    /* YouTube player */
+
+    .selection {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 15px;
+      margin-bottom: 18px;
+    }
+
+    .selection-label {
+      display: block;
+      margin-bottom: 5px;
+      color: var(--muted);
+      font-size: 10px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+    }
+
+    .selected-note {
+      color: var(--wine);
+      font: 400 37px Georgia, serif;
+    }
+
+    .mode-badge {
+      padding: 7px 10px;
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      color: var(--purple);
+      font-size: 12px;
+    }
+
+    .player-shell {
+      min-height: 220px;
+      border: 1px solid var(--line);
+      border-radius: 9px;
+      background: #171310;
+    }
+
+    #player,
+    .player-shell iframe {
+      display: block;
+      width: 100%;
+      height: 240px;
+      border: 0;
+      border-radius: 9px;
+    }
+
+    .placeholder {
+      display: grid;
+      place-items: center;
+      min-height: 240px;
+      padding: 24px;
+      color: #eadfc9;
+      text-align: center;
+      font-size: 14px;
+      line-height: 1.7;
+    }
+
+    .status {
+      min-height: 44px;
+      margin: 16px 0 0;
+      color: var(--green);
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .status[data-error="true"] {
+      color: var(--wine);
+    }
+
+    .video-title {
+      margin: 12px 0 0;
+      font-size: 14px;
+      font-weight: 650;
+      line-height: 1.6;
+      overflow-wrap: anywhere;
+    }
+
+    .channel {
+      margin: 5px 0 0;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 9px;
+      margin-top: 20px;
+    }
+
+    .action {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 43px;
+      padding: 10px 13px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: transparent;
+      color: var(--wine);
+      font-size: 12px;
+      text-decoration: none;
+    }
+
+    .action:hover:not(:disabled) {
+      background: var(--cream);
+      border-color: var(--gold);
+    }
+
+    .action:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+    }
+
+    .footnote {
+      margin: 22px 0 0;
+      padding-top: 17px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.7;
+    }
+
+    footer {
+      padding: 0 20px 32px;
+      color: var(--muted);
+      text-align: center;
+      font-size: 11px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+    }
+
+    footer span {
+      color: var(--wine);
+      font-weight: 650;
+    }
+
+    @media (max-width: 850px) {
+      .main-nav {
+        padding: 10px 12px;
+      }
+
+      .nav-inner {
+        justify-content: flex-start;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        padding: 4px 3px 9px;
+        scrollbar-width: thin;
+        scrollbar-color: var(--gold) var(--purple);
+      }
+
+      .main-nav a {
+        flex: 0 0 auto;
+        min-height: 44px;
+        font-size: 14px;
+      }
+
+      .layout {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 420px) {
+      main {
+        padding: 30px 16px;
+      }
+
+      .card {
+        padding: 18px;
+      }
+
+      .pitch-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      #player,
+      .player-shell iframe,
+      .placeholder {
+        height: 220px;
+        min-height: 220px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Replace placeholder routes with your actual routes. -->
+  <nav class="main-nav" aria-label="Main navigation">
+    <div class="nav-inner">
+      <a href="/home">Home</a>
+      <a href="/dictionary">Carnatic Dictionary</a>
+      <a href="/pitch-identifier">Pitch Identifier</a>
+      <a href="/manodharmam">Manodharmam</a>
+      <a href="/ragas">Ragas</a>
+      <a href="/composers">Composers</a>
+      <a href="/compositions">Compositions Archive</a>
+      <a href="/talam">Talam</a>
+      <a href="/metronome">Metronome</a>
+      <a href="/shruti" aria-current="page">Shruthi</a>
+    </div>
+  </nav>
+
+  <main>
+    <section class="intro" aria-labelledby="page-title">
+      <p class="eyebrow">Your practice companion</p>
+      <h1 id="page-title">Shruthi</h1>
+      <p>
+        Choose your pitch and Shruti Type to find a shruti
+        on YouTube.
+      </p>
+    </section>
+
+    <div class="layout">
+      <section class="card" aria-labelledby="pitch-heading">
+        <h2 id="pitch-heading">Choose your pitch</h2>
+        <p class="hint">
+          Select a note, then choose Panchamam, Madhyamam,
+          or Nishadam.
+        </p>
+
+        <div
+          class="pitch-grid"
+          id="pitch-grid"
+          role="group"
+          aria-label="Choose a shruti pitch"
+        ></div>
+
+        <div class="field">
+          <span class="field-label" id="mode-label">
+            Shruti Type
+          </span>
+
+          <div class="modes" role="group" aria-labelledby="mode-label">
+            <button
+              class="mode"
+              type="button"
+              data-mode="pa"
+              aria-pressed="true"
+            >
+              <span>Pa</span>
+              <small>Panchamam</small>
+            </button>
+
+            <button
+              class="mode"
+              type="button"
+              data-mode="ma"
+              aria-pressed="false"
+            >
+              <span>Ma</span>
+              <small>Madhyamam</small>
+            </button>
+
+            <button
+              class="mode"
+              type="button"
+              data-mode="ni"
+              aria-pressed="false"
+            >
+              <span>Ni</span>
+              <small>Nishadam</small>
+            </button>
+          </div>
+        </div>
+
+        <div class="search-preview">
+          YouTube search
+          <span id="search-query">Choose a pitch to begin.</span>
+        </div>
+
+        <p class="footnote">
+          Changing the Shruti Type searches again using its full name.
+          Results are supplied by YouTube and are not pitch-verified.
+        </p>
+      </section>
+
+      <section class="card" aria-label="YouTube shruti player">
+        <div class="selection">
+          <div>
+            <span class="selection-label">Selected pitch</span>
+            <span class="selected-note" id="selected-note">—</span>
+          </div>
+
+          <span class="mode-badge" id="mode-badge">Panchamam</span>
+        </div>
+
+        <div class="player-shell">
+          <div id="player">
+            <div class="placeholder">
+              Select a pitch to load a YouTube Shruti Type.
+            </div>
+          </div>
+        </div>
+
+        <p
+          class="status"
+          id="status"
+          role="status"
+          aria-live="polite"
+        >
+          Ready when you are.
+        </p>
+
+        <p class="video-title" id="video-title" hidden></p>
+        <p class="channel" id="channel" hidden></p>
+
+        <div class="actions">
+          <button
+            class="action"
+            id="next-result"
+            type="button"
+            disabled
+          >
+            Try another result
+          </button>
+
+          <button
+            class="action"
+            id="retry"
+            type="button"
+            hidden
+          >
+            Retry search
+          </button>
+
+          <a
+            class="action"
+            id="youtube-link"
+            target="_blank"
+            rel="noopener noreferrer"
+            hidden
+          >
+            Open video
+          </a>
+
+          <a
+            class="action"
+            id="search-link"
+            target="_blank"
+            rel="noopener noreferrer"
+            hidden
+          >
+            Search on YouTube
+          </a>
+        </div>
+
+        <p class="footnote">
+          Use the YouTube player for playback and volume.
+          If playback does not start automatically, press Play.
+          Listen to confirm the pitch and Shruti Type before practice.
+        </p>
+      </section>
+    </div>
+  </main>
+
+  <footer>Powered by <span>HorizenDataBase</span></footer>
+
+  <noscript>
+    <p style="text-align:center;padding:20px">
+      Enable JavaScript to search for and play shruti videos.
+    </p>
+  </noscript>
+
+  <script>
+    "use strict";
+
+    // Requested placeholder. Replace with your configured browser key.
+    const YOUTUBE_API_KEY =
+      "AIzaSyDgir7W26YD_PaZjbxU2iWYTZhW4Vf_n84";
+
+    const $ = id => document.getElementById(id);
+
+    const pitches = [
+      { note: "C",  name: "C" },
+      { note: "C#", name: "C sharp" },
+      { note: "D",  name: "D" },
+      { note: "D#", name: "D sharp" },
+      { note: "E",  name: "E" },
+      { note: "F",  name: "F" },
+      { note: "F#", name: "F sharp" },
+      { note: "G",  name: "G" },
+      { note: "G#", name: "G sharp" },
+      { note: "A",  name: "A" },
+      { note: "A#", name: "A sharp" },
+      { note: "B",  name: "B" }
+    ];
+
+    // Edit search terms here if you prefer another spelling.
+    const modes = {
+      pa: { label: "Panchamam", query: "panchamam" },
+      ma: { label: "Madhyamam", query: "madhyamam" },
+      ni: { label: "Nishadam", query: "nishadam" }
+    };
+
+    let selectedPitch = null;
+    let selectedMode = "pa";
+
+    let player = null;
+    let playerReady = false;
+    let apiRequested = false;
+    let pendingVideo = null;
+    let activeVideoId = "";
+
+    let results = [];
+    let resultIndex = -1;
+
+    let searchBusy = false;
+    let requestNumber = 0;
+    let searchController = null;
+
+    const cache = new Map();
+
+    function setStatus(message, isError = false) {
+      $("status").textContent = message;
+      $("status").dataset.error = String(isError);
+    }
+
+    function currentQuery() {
+      if (!selectedPitch) return "";
+
+      return (
+        `${selectedPitch.name} carnatic shruti ` +
+        modes[selectedMode].query
+      );
+    }
+
+    function decodeText(value) {
+      const parsed = new DOMParser().parseFromString(
+        String(value || ""),
+        "text/html"
+      );
+
+      return parsed.documentElement.textContent || "";
+    }
+
+    function updateControls() {
+      document.querySelectorAll(".pitch").forEach(button => {
+        button.setAttribute(
+          "aria-pressed",
+          String(button.dataset.note === selectedPitch?.note)
+        );
+      });
+
+      document.querySelectorAll(".mode").forEach(button => {
+        button.setAttribute(
+          "aria-pressed",
+          String(button.dataset.mode === selectedMode)
+        );
+      });
+
+      $("selected-note").textContent = selectedPitch?.note || "—";
+      $("mode-badge").textContent = modes[selectedMode].label;
+
+      const query = currentQuery();
+
+      $("search-query").textContent =
+        query || "Choose a pitch to begin.";
+
+      $("search-link").hidden = !query;
+
+      if (query) {
+        $("search-link").href =
+          "https://www.youtube.com/results?search_query=" +
+          encodeURIComponent(query);
+      }
+    }
+
+    function updateNextButton() {
+      $("next-result").disabled =
+        searchBusy ||
+        resultIndex < 0 ||
+        resultIndex >= results.length - 1;
+    }
+
+    function clearResultDetails() {
+      $("video-title").hidden = true;
+      $("channel").hidden = true;
+      $("youtube-link").hidden = true;
+      $("youtube-link").removeAttribute("href");
+    }
+
+    function ensurePlayerAPI() {
+      if (window.YT && typeof window.YT.Player === "function") {
+        createPlayer();
+        return;
+      }
+
+      if (apiRequested) return;
+      apiRequested = true;
+
+      const script = document.createElement("script");
+      script.src = "https://www.youtube.com/iframe_api";
+
+      script.onerror = () => {
+        apiRequested = false;
+        script.remove();
+
+        setStatus(
+          "The YouTube player could not load. Check your connection " +
+          "or open the video on YouTube.",
+          true
+        );
+      };
+
+      document.head.appendChild(script);
+    }
+
+    window.onYouTubeIframeAPIReady = createPlayer;
+
+    function createPlayer() {
+      if (player) return;
+
+      const playerVars = {
+        controls: 1,
+        playsinline: 1,
+        fs: 1
+      };
+
+      if (
+        location.protocol === "http:" ||
+        location.protocol === "https:"
+      ) {
+        playerVars.origin = location.origin;
+      }
+
+      player = new YT.Player("player", {
+        width: "100%",
+        height: "240",
+        playerVars,
+
+        events: {
+          onReady: () => {
+            playerReady = true;
+
+            if (pendingVideo && !searchBusy) {
+              const id = pendingVideo;
+              pendingVideo = null;
+              player.loadVideoById(id);
+            }
+          },
+
+          onStateChange: event => {
+            if (searchBusy || !activeVideoId) return;
+
+            const currentId =
+              player.getVideoData?.().video_id;
+
+            if (currentId !== activeVideoId) return;
+
+            if (event.data === YT.PlayerState.PLAYING) {
+              setStatus(
+                "Playing. Confirm the pitch and Shruti Type by ear."
+              );
+            } else if (event.data === YT.PlayerState.PAUSED) {
+              setStatus("Paused. Press Play to continue.");
+            } else if (event.data === YT.PlayerState.ENDED) {
+              setStatus("Finished. Replay or try another result.");
+            }
+          },
+
+          onAutoplayBlocked: () => {
+            if (!searchBusy && activeVideoId) {
+              setStatus(
+                "Press Play in the YouTube player to start."
+              );
+            }
+          },
+
+          onError: event => {
+            if (searchBusy || !activeVideoId) return;
+
+            const messages = {
+              2: "This video could not be loaded.",
+              5: "The browser could not play this video.",
+              100: "This video is unavailable.",
+              101: "The owner does not allow embedded playback.",
+              150: "The owner does not allow embedded playback.",
+              153: "YouTube could not verify this site's playback " +
+                   "request. Host the page over HTTP or HTTPS " +
+                   "and allow the normal Referer header."
+            };
+
+            setStatus(
+              (messages[event.data] || "Playback failed.") +
+              " Try another result or open the video on YouTube.",
+              true
+            );
+          }
+        }
+      });
+    }
+
+    function loadResult(index) {
+      const result = results[index];
+      if (!result) return;
+
+      resultIndex = index;
+      activeVideoId = result.id.videoId;
+
+      $("video-title").textContent =
+        decodeText(result.snippet.title);
+      $("video-title").hidden = false;
+
+      $("channel").textContent =
+        decodeText(result.snippet.channelTitle);
+      $("channel").hidden = false;
+
+      $("youtube-link").href =
+        "https://www.youtube.com/watch?v=" +
+        encodeURIComponent(activeVideoId);
+      $("youtube-link").hidden = false;
+
+      updateNextButton();
+
+      setStatus(
+        "Loading Shruti Type… If needed, press Play in the player."
+      );
+
+      if (playerReady) {
+        pendingVideo = null;
+        player.loadVideoById(activeVideoId);
+      } else {
+        pendingVideo = activeVideoId;
+        ensurePlayerAPI();
+      }
+    }
+
+    async function searchVideos() {
+      if (!selectedPitch) return;
+
+      const query = currentQuery();
+      const thisRequest = ++requestNumber;
+
+      if (searchController) searchController.abort();
+      searchController = new AbortController();
+
+      const controller = searchController;
+
+      searchBusy = true;
+      results = [];
+      resultIndex = -1;
+      pendingVideo = null;
+      activeVideoId = "";
+
+      if (playerReady) player.stopVideo();
+
+      $("retry").hidden = true;
+      clearResultDetails();
+      updateControls();
+      updateNextButton();
+
+      setStatus(`Searching YouTube for “${query}”…`);
+
+      try {
+        let items = cache.get(query);
+
+        if (!items) {
+          const parameters = new URLSearchParams({
+            key: YOUTUBE_API_KEY,
+            part: "snippet",
+            type: "video",
+            q: query,
+            maxResults: "5",
+            videoEmbeddable: "true",
+            videoSyndicated: "true",
+            safeSearch: "moderate"
+          });
+
+          const response = await fetch(
+            "https://www.googleapis.com/youtube/v3/search?" +
+            parameters.toString(),
+            { signal: controller.signal }
+          );
+
+          const data = await response.json();
+
+          if (!response.ok) {
+            const reason = data.error?.errors?.[0]?.reason;
+
+            if (
+              reason === "quotaExceeded" ||
+              reason === "dailyLimitExceeded"
+            ) {
+              throw new Error(
+                "The YouTube search quota has been reached. " +
+                "Use Search on YouTube or try again later."
+              );
+            }
+
+            throw new Error(
+              data.error?.message ||
+              "Search failed. Check the API key and project settings."
+            );
+          }
+
+          items = (data.items || []).filter(
+            item => item.id?.videoId && item.snippet
+          );
+
+          if (items.length) cache.set(query, items);
+        }
+
+        if (thisRequest !== requestNumber) return;
+
+        searchBusy = false;
+        results = items;
+
+        if (!results.length) {
+          setStatus(
+            "No embeddable results found for this combination. " +
+            "Try Search on YouTube.",
+            true
+          );
+
+          $("retry").hidden = false;
+          updateNextButton();
+          return;
+        }
+
+        loadResult(0);
+      } catch (error) {
+        if (
+          error.name === "AbortError" ||
+          thisRequest !== requestNumber
+        ) {
+          return;
+        }
+
+        searchBusy = false;
+        $("retry").hidden = false;
+        updateNextButton();
+
+        setStatus(
+          error.message ||
+          "Could not search YouTube. Check your connection.",
+          true
+        );
+      }
+    }
+
+    pitches.forEach(pitch => {
+      const button = document.createElement("button");
+
+      button.type = "button";
+      button.className = "pitch";
+      button.dataset.note = pitch.note;
+      button.setAttribute("aria-pressed", "false");
+      button.setAttribute(
+        "aria-label",
+        `Choose ${pitch.name} shruti`
+      );
+
+      const note = document.createElement("span");
+      note.className = "pitch-note";
+      note.textContent = pitch.note;
+
+      const name = document.createElement("span");
+      name.className = "pitch-name";
+      name.textContent =
+        pitch.note.includes("#") ? pitch.name : "Natural";
+
+      button.append(note, name);
+
+      button.addEventListener("click", () => {
+        selectedPitch = pitch;
+        searchVideos();
+      });
+
+      $("pitch-grid").appendChild(button);
+    });
+
+    document.querySelectorAll(".mode").forEach(button => {
+      button.addEventListener("click", () => {
+        const mode = button.dataset.mode;
+
+        if (mode === selectedMode) return;
+
+        selectedMode = mode;
+        updateControls();
+
+        if (selectedPitch) {
+          searchVideos();
+        } else {
+          setStatus(
+            `${modes[selectedMode].label} selected. ` +
+            "Choose a pitch to begin."
+          );
+        }
+      });
+    });
+
+    $("next-result").addEventListener("click", () => {
+      if (!searchBusy && resultIndex + 1 < results.length) {
+        loadResult(resultIndex + 1);
+      }
+    });
+
+    $("retry").addEventListener("click", searchVideos);
+
+    updateControls();
+  </script>
+</body>
+</html>
