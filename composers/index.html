@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <meta name="theme-color" content="#3b244d">
+  <title>Composers | World of Carnatic</title>
+
+  <style>
+    :root {
+      color-scheme: light;
+
+      --cream: #f7f5df;
+      --paper: #fffdf3;
+      --ink: #402d23;
+      --muted: #786959;
+      --wine: #7b2516;
+      --purple: #3b244d;
+      --gold: #b68b50;
+      --line: #dfd3b9;
+      --green: #45543b;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: var(--cream);
+      color: var(--ink);
+      font-family: Georgia, "Times New Roman", serif;
+    }
+
+    a {
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    :focus-visible {
+      outline: 3px solid var(--gold);
+      outline-offset: 5px;
+    }
+
+    /* Full-width navigation */
+
+    .main-nav {
+      width: 100%;
+      padding: 13px 20px;
+      background: var(--purple);
+      border-bottom: 4px solid var(--gold);
+    }
+
+    .nav-inner {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      max-width: 1500px;
+      margin: auto;
+    }
+
+    .main-nav a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 42px;
+      padding: 10px 17px;
+
+      border: 1px solid rgb(247 240 219 / 16%);
+      border-radius: 7px;
+      background: rgb(255 255 255 / 5%);
+
+      color: #f5ecd8;
+      font-size: 16px;
+      font-weight: 700;
+      text-decoration: none;
+      white-space: nowrap;
+
+      transition:
+        background 150ms ease,
+        border-color 150ms ease;
+    }
+
+    .main-nav a:hover {
+      border-color: var(--gold);
+      background: rgb(255 255 255 / 12%);
+    }
+
+    .main-nav a[aria-current="page"] {
+      border-color: #c28a42;
+      background: var(--wine);
+    }
+
+    /* Page heading */
+
+    .page {
+      width: min(100% - 48px, 1180px);
+      margin: auto;
+      padding: 48px 0 60px;
+    }
+
+    .page-header {
+      margin-bottom: 42px;
+      text-align: center;
+    }
+
+    .eyebrow {
+      margin: 0 0 12px;
+      color: var(--green);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont,
+        "Segoe UI", sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+    }
+
+    .page-title {
+      margin: 0;
+      color: var(--wine);
+      font-size: clamp(44px, 7vw, 70px);
+      font-weight: 400;
+      line-height: 1.1;
+    }
+
+    .title-divider {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      margin-top: 24px;
+    }
+
+    .title-divider::before,
+    .title-divider::after {
+      content: "";
+      width: 80px;
+      height: 1px;
+      background: var(--gold);
+    }
+
+    .title-diamond {
+      width: 8px;
+      height: 8px;
+      background: var(--wine);
+      transform: rotate(45deg);
+    }
+
+    /* Three-column portrait gallery */
+
+    .composers-list {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 40px 32px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .composer {
+      min-width: 0;
+      padding-bottom: 18px;
+    }
+
+    .composer-figure {
+      position: relative;
+      margin: 0;
+    }
+
+    /* Gold frame */
+
+    .composer-frame {
+      position: relative;
+      width: 100%;
+      padding: 13px;
+      border: 2px solid #785018;
+
+      background: linear-gradient(
+        135deg,
+        #76501b 0%,
+        #c89938 15%,
+        #fae5a3 30%,
+        #a77521 49%,
+        #f0ce78 72%,
+        #76501b 100%
+      );
+
+      box-shadow:
+        0 0 0 1px #d5af54,
+        inset 0 0 0 2px #f7e0a0,
+        inset 0 0 0 5px #8d6424,
+        inset 0 0 0 7px #e6c477,
+        0 12px 24px rgb(64 45 35 / 14%);
+    }
+
+    /* Decorative details at the corners */
+
+    .frame-corner {
+      position: absolute;
+      z-index: 3;
+      width: 25px;
+      height: 25px;
+      border: 2px solid #f7e0a0;
+      pointer-events: none;
+    }
+
+    .frame-corner.top-left {
+      top: 4px;
+      left: 4px;
+      border-right: 0;
+      border-bottom: 0;
+    }
+
+    .frame-corner.top-right {
+      top: 4px;
+      right: 4px;
+      border-left: 0;
+      border-bottom: 0;
+    }
+
+    .frame-corner.bottom-left {
+      bottom: 4px;
+      left: 4px;
+      border-right: 0;
+      border-top: 0;
+    }
+
+    .frame-corner.bottom-right {
+      bottom: 4px;
+      right: 4px;
+      border-left: 0;
+      border-top: 0;
+    }
+
+    /* Portrait */
+
+    .composer-portrait {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 4 / 5;
+      overflow: hidden;
+      border: 2px solid #69491c;
+      background: #29241c;
+
+      box-shadow:
+        0 0 0 1px #f3d995,
+        inset 0 0 15px rgb(0 0 0 / 25%);
+    }
+
+    .composer-image {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+    }
+
+    .composer-image[hidden] {
+      display: none;
+    }
+
+    .composer-placeholder {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 100%;
+
+      background:
+        radial-gradient(
+          ellipse at 50% 30%,
+          #655039 0%,
+          #392e23 48%,
+          #211b16 100%
+        );
+
+      color: #e5c67c;
+      font-size: clamp(36px, 5vw, 62px);
+      font-weight: 400;
+      letter-spacing: 0.06em;
+      text-align: center;
+    }
+
+    /* Centered name plaque overlapping the bottom of the frame */
+
+    .composer-caption {
+      position: relative;
+      z-index: 4;
+      width: 88%;
+      min-height: 68px;
+      margin: -22px auto 0;
+      padding: 4px;
+
+      border: 1px solid #79501b;
+      border-radius: 3px;
+
+      background: linear-gradient(
+        135deg,
+        #8b6125,
+        #f5dda0 30%,
+        #b88b3c 65%,
+        #efd18b
+      );
+
+      box-shadow:
+        0 0 0 1px #d6b466,
+        0 5px 12px rgb(64 45 35 / 20%);
+    }
+
+    .composer-name {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      min-height: 58px;
+      margin: 0;
+      padding: 11px 12px;
+
+      border: 1px solid #bb9755;
+      background: var(--paper);
+      color: var(--wine);
+
+      font-size: clamp(17px, 1.8vw, 22px);
+      font-weight: 400;
+      line-height: 1.3;
+      text-align: center;
+      overflow-wrap: anywhere;
+    }
+
+    .noscript-message {
+      color: var(--muted);
+      text-align: center;
+      line-height: 1.6;
+    }
+
+    footer {
+      padding: 0 20px 32px;
+      color: var(--muted);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont,
+        "Segoe UI", sans-serif;
+      font-size: 11px;
+      letter-spacing: 1.5px;
+      text-align: center;
+      text-transform: uppercase;
+    }
+
+    footer span {
+      color: var(--wine);
+      font-weight: 650;
+    }
+
+    /* Tablet navigation */
+
+    @media (max-width: 1000px) {
+      .main-nav {
+        padding: 10px 12px;
+      }
+
+      .nav-inner {
+        justify-content: flex-start;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        padding: 4px 3px 9px;
+        scrollbar-width: thin;
+        scrollbar-color: var(--gold) var(--purple);
+      }
+
+      .main-nav a {
+        flex: 0 0 auto;
+        min-height: 44px;
+        font-size: 14px;
+      }
+    }
+
+    /* Tablet gallery */
+
+    @media (max-width: 740px) {
+      .composers-list {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 32px 24px;
+      }
+
+      .composer-name {
+        font-size: 19px;
+      }
+    }
+
+    /* Phone gallery */
+
+    @media (max-width: 440px) {
+      .page {
+        width: min(100% - 40px, 340px);
+        padding: 34px 0 42px;
+      }
+
+      .page-header {
+        margin-bottom: 32px;
+      }
+
+      .composers-list {
+        grid-template-columns: 1fr;
+        gap: 30px;
+      }
+
+      .composer-name {
+        font-size: 22px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      * {
+        transition: none !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Replace these placeholder routes with your actual routes. -->
+  <nav class="main-nav" aria-label="Main navigation">
+    <div class="nav-inner">
+      <a href="/home">Home</a>
+      <a href="/dictionary">Carnatic Dictionary</a>
+      <a href="/pitch-identifier">Pitch Identifier</a>
+      <a href="/manodharmam">Manodharmam</a>
+      <a href="/ragas">Ragas</a>
+      <a href="/composers" aria-current="page">Composers</a>
+      <a href="/compositions">Compositions Archive</a>
+      <a href="/talam">Talam</a>
+      <a href="/metronome">Metronome</a>
+      <a href="/shruti">Shruthi</a>
+    </div>
+  </nav>
+
+  <main class="page">
+    <header class="page-header">
+      <p class="eyebrow">World of Carnatic</p>
+      <h1 class="page-title">Composers</h1>
+
+      <div class="title-divider" aria-hidden="true">
+        <span class="title-diamond"></span>
+      </div>
+    </header>
+
+    <ul
+      class="composers-list"
+      id="composersList"
+      aria-label="Composers"
+    ></ul>
+
+    <noscript>
+      <p class="noscript-message">
+        Enable JavaScript to display the composers gallery.
+      </p>
+    </noscript>
+  </main>
+
+  <footer>
+    Powered by <span>HorizenDataBase</span>
+  </footer>
+
+  <script>
+    "use strict";
+
+    /*
+      Replace these entries with your composers and image paths.
+
+      Images can be stored beside this HTML file:
+        image: "./composer.jpg"
+
+      Missing images display initials inside the gold frame.
+    */
+
+    const composers = [
+      {
+        name: "Sri Tyagaraja",
+        image: "https://raw.githubusercontent.com/TheCoder-creator/worldofcarnatic/main/composers/Tyagaraja.jpeg"
+      },
+      {
+        name: "Ludwig van Beethoven",
+        image: "./beethoven.jpg"
+      },
+      {
+        name: "Johann Sebastian Bach",
+        image: "./bach.jpg"
+      },
+      {
+        name: "Frédéric Chopin",
+        image: "./chopin.jpg"
+      },
+      {
+        name: "Pyotr Ilyich Tchaikovsky",
+        image: "./tchaikovsky.jpg"
+      },
+      {
+        name: "Claude Debussy",
+        image: "./debussy.jpg"
+      }
+    ];
+
+    function getInitials(name) {
+      return name
+        .trim()
+        .split(/\s+/)
+        .filter(Boolean)
+        .map(part => Array.from(part)[0])
+        .slice(0, 3)
+        .join("");
+    }
+
+    function createComposerCard(composer, index) {
+      const item = document.createElement("li");
+      item.className = "composer";
+
+      const figure = document.createElement("figure");
+      figure.className = "composer-figure";
+
+      const frame = document.createElement("div");
+      frame.className = "composer-frame";
+
+      const portrait = document.createElement("div");
+      portrait.className = "composer-portrait";
+
+      const placeholder = document.createElement("div");
+      placeholder.className = "composer-placeholder";
+      placeholder.textContent = getInitials(composer.name);
+      placeholder.setAttribute("aria-hidden", "true");
+
+      portrait.appendChild(placeholder);
+
+      if (composer.image) {
+        const image = document.createElement("img");
+        image.className = "composer-image";
+
+        // The caption supplies the composer's name.
+        image.alt = "";
+        image.loading = index < 3 ? "eager" : "lazy";
+        image.decoding = "async";
+
+        image.addEventListener("error", () => {
+          image.hidden = true;
+        });
+
+        image.src = composer.image;
+        portrait.appendChild(image);
+      }
+
+      frame.appendChild(portrait);
+
+      const cornerPositions = [
+        "top-left",
+        "top-right",
+        "bottom-left",
+        "bottom-right"
+      ];
+
+      for (const position of cornerPositions) {
+        const corner = document.createElement("span");
+        corner.className = `frame-corner ${position}`;
+        corner.setAttribute("aria-hidden", "true");
+        frame.appendChild(corner);
+      }
+
+      const caption = document.createElement("figcaption");
+      caption.className = "composer-caption";
+
+      const name = document.createElement("h2");
+      name.className = "composer-name";
+      name.textContent = composer.name;
+
+      caption.appendChild(name);
+      figure.append(frame, caption);
+      item.appendChild(figure);
+
+      return item;
+    }
+
+    const list = document.getElementById("composersList");
+    const fragment = document.createDocumentFragment();
+
+    composers.forEach((composer, index) => {
+      fragment.appendChild(createComposerCard(composer, index));
+    });
+
+    list.appendChild(fragment);
+  </script>
+</body>
+</html>
